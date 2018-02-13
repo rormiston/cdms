@@ -37,3 +37,6 @@ $ pip uninstall tensorflow-gpu
 $ pip install tensorflow
 ```
 
+**NOTE:** This may take quite a few cores and a lot of RAM. If you don't have
+sufficient memory or CPUs, you'll get an ugly, albeit harmless,
+"ResourceExhaustedError".
