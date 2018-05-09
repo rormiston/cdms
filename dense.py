@@ -7,18 +7,19 @@ np.random.seed(3301)
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
+from keras import optimizers
 
 
 # global params
-activation = 'linear'
+activation = 'selu'
 batch_size = 10
-epochs     = 500
+epochs     = 400
 verbose    = 2
 optimizer  = 'adam'
 
 # get data
-mat_file = sio.loadmat('short_data.mat')
-# mat_file = sio.loadmat('medium_data.mat')
+# mat_file = sio.loadmat('short_data.mat')
+mat_file = sio.loadmat('medium_data.mat')
 data = mat_file['data']
 
 # split into training and testing
@@ -67,9 +68,9 @@ yhat = model.predict(x_test)
 yhat = yhat.reshape(len(yhat))
 
 # show results
-bins = np.arange(0, 41, 1)
-plt.hist(yhat, label='prediction', bins=bins, alpha=0.8)
-plt.hist(y_test, label='target', bins=bins, alpha=0.8)
+bins = np.arange(0, 25.5, 0.5)
+plt.hist(y_test, label='target', bins=bins, histtype='step')
+plt.hist(yhat, label='prediction', bins=bins, histtype='step')
 plt.ylabel('Count')
 plt.xlabel('Energy (keV)')
 plt.title('Network Prediction vs. Target Energy Histogram')
@@ -87,8 +88,8 @@ plt.legend()
 plt.savefig('dense_dist.png')
 plt.close()
 
-plt.plot(history.history['loss'][3:], label='training loss')
-plt.plot(history.history['val_loss'][3:], label='testing loss')
+plt.plot(history.history['loss'], label='training loss')
+plt.plot(history.history['val_loss'], label='testing loss')
 plt.legend()
 plt.title('Dense Network Loss')
 plt.savefig('dense_loss.png')
